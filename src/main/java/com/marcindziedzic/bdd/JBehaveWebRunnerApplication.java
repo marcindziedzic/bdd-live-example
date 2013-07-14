@@ -10,7 +10,7 @@ public class JBehaveWebRunnerApplication extends WebRunnerApplication {
 
     @Override
     protected List<CandidateSteps> candidateSteps() {
-        return new InstanceStepsFactory(configuration(), new TradeIsNotAlertedBelowThreshold()).createCandidateSteps();
+        return new InstanceStepsFactory(configuration()).createCandidateSteps();
     }
 
 }
