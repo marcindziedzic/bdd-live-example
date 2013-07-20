@@ -8,7 +8,7 @@ import org.openqa.selenium.By;
 public class HomePage extends Page {
 	
 	public HomePage(WebDriverProvider driverProvider) {
-		super(driverProvider, "Strona główna");
+		super(driverProvider, "Hosting, Rejestracja domen");
 	}
 	
 	@Given("opened home page")

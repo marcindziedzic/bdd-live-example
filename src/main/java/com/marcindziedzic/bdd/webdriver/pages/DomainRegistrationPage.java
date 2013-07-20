@@ -10,7 +10,7 @@ import org.openqa.selenium.WebElement;
 public class DomainRegistrationPage extends Page {
 
 	public DomainRegistrationPage(WebDriverProvider driverProvider) {
-		super(driverProvider, "Domeny");
+		super(driverProvider, "Darmowe domeny");
 	}
 
 	@Given("domain registration page")
