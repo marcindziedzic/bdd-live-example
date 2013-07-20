@@ -18,6 +18,7 @@ import org.jbehave.core.reporters.FilePrintStreamFactory;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.InjectableStepsFactory;
 import org.jbehave.core.steps.InstanceStepsFactory;
+import org.jbehave.core.steps.MarkUnmatchedStepsAsPending;
 import org.jbehave.core.steps.ParameterConverters;
 
 import java.text.SimpleDateFormat;
@@ -50,18 +51,23 @@ public abstract class Story extends JUnitStory {
         ParameterConverters parameterConverters = new ParameterConverters();
         // factory to allow parameter conversion and loading from external
         // resources (used by StoryParser too)
-        ExamplesTableFactory examplesTableFactory = new ExamplesTableFactory(new LocalizedKeywords(),
+        LocalizedKeywords keywords = getKeywords();
+
+        ExamplesTableFactory examplesTableFactory = new ExamplesTableFactory(keywords,
                 new LoadFromClasspath(embeddableClass), parameterConverters);
         // add custom converters
         parameterConverters.addConverters(new ParameterConverters.DateConverter(new SimpleDateFormat("yyyy-MM-dd")),
                 new ParameterConverters.ExamplesTableConverter(examplesTableFactory));
 
         return new MostUsefulConfiguration()
+                .useKeywords(keywords)
+                .useStoryParser(new RegexStoryParser(keywords))
                 .usePendingStepStrategy(new FailingUponPendingStep())
                 .useStoryControls(new StoryControls().doDryRun(false).doSkipScenariosAfterFailure(false))
                 .useStoryLoader(new LoadFromClasspath(embeddableClass))
-                .useStoryParser(new RegexStoryParser(examplesTableFactory))
-                .useStoryPathResolver(new UnderscoredCamelCaseResolver())
+                .useStepCollector(new MarkUnmatchedStepsAsPending(keywords))
+                .useStoryParser(new RegexStoryParser(keywords, examplesTableFactory))
+                .useStoryPathResolver(new UnderscoredCamelCaseResolver(getStoryExtension()))
                 .useStoryReporterBuilder(
                         new StoryReporterBuilder()
                                 .withCodeLocation(CodeLocations.codeLocationFromClass(embeddableClass))
@@ -72,6 +78,15 @@ public abstract class Story extends JUnitStory {
                         // use '%' instead of '$' to identify parameters
                 .useStepPatternParser(new RegexPrefixCapturingPatternParser("$"))
                 .useStepMonitor(xref.getStepMonitor());
+
+    }
+
+    public LocalizedKeywords getKeywords() {
+        return new LocalizedKeywords();
+    }
+
+    public String getStoryExtension() {
+        return ".story";
     }
 
     @Override
