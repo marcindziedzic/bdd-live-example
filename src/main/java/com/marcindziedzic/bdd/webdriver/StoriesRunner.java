@@ -64,7 +64,6 @@ public class StoriesRunner extends JUnitStories {
                 new WebDriverScreenshotOnFailure(driverProvider, configuration.storyReporterBuilder()));
     }
 
-
     @Override
     protected List<String> storyPaths() {
         return new StoryFinder()

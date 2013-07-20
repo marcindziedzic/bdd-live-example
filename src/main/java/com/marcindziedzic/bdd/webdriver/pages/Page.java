@@ -70,6 +70,7 @@ public class Page extends WebDriverPage {
 
 	protected void insertText(String elementId, String name) {
 		WebElement element = findById(elementId);
+        element.clear();
 		element.sendKeys(name);
 	}
 
