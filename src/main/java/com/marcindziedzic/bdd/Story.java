@@ -72,8 +72,10 @@ public abstract class Story extends JUnitStory {
                         new StoryReporterBuilder()
                                 .withCodeLocation(CodeLocations.codeLocationFromClass(embeddableClass))
                                 .withDefaultFormats().withPathResolver(new FilePrintStreamFactory.ResolveToPackagedName())
-                                .withViewResources(viewResources).withFormats(CONSOLE, TXT, HTML, XML)
-                                .withFailureTrace(true).withFailureTraceCompression(true).withCrossReference(xref))
+                                .withViewResources(viewResources).withFormats(CONSOLE, HTML, STATS, XML)
+                                .withFailureTrace(true)
+                                .withFailureTraceCompression(true)
+                                .withCrossReference(xref))
                 .useParameterConverters(parameterConverters)
                         // use '%' instead of '$' to identify parameters
                 .useStepPatternParser(new RegexPrefixCapturingPatternParser("$"))
