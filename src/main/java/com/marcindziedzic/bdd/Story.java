@@ -26,7 +26,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
-import static org.jbehave.core.reporters.Format.*;
+import static org.jbehave.core.reporters.Format.CONSOLE;
+import static org.jbehave.core.reporters.Format.HTML;
+import static org.jbehave.core.reporters.Format.STATS;
+import static org.jbehave.core.reporters.Format.XML;
 
 public abstract class Story extends JUnitStory {
 
